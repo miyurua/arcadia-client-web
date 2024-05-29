@@ -1,65 +1,42 @@
-import React, { useState } from "react";
-import logo from "../assets/logo.jpeg";
-import cart_icon from "../assets/cart_icon.png";
+import { FaSearch } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
-  const [menu, setMenu] = useState("Games");
-
   return (
-    <>
-      <div className="flex justify-around p-16">
-        <div className="flex items-center gap-[10px]">
-          <img className="h-15 w-10" src={logo} alt="arcadia" />
-          <p className="text-[#9F2B68] text-xl font-bold font-poppins">
+    <header className="bg-[#3B0A45]">
+      <div className="flex flex-row justify-between max-w-6xl mx-auto p-3 items-center">
+        <Link to="/">
+          <span className="text-[#FF6EC7] font-bold text-sm sm:text-xl">
             Arcadia
-          </p>
-        </div>
-        <ul className="flex items-center gap-[50px] text-lg font-semibold font-poppins">
-          <li
-            className="flex flex-col items-center justify-center cursor-pointer"
-            onClick={() => setMenu("Games")}
-          >
-            Games
-            {menu == "Games" ? (
-              <hr className="w-4/5 border border-r-4 bg-[#0ff0fc]" />
-            ) : (
-              ""
-            )}
-          </li>
-          <li
-            className="flex flex-col items-center justify-center cursor-pointer"
-            onClick={() => setMenu("PS4")}
-          >
-            PS4
-            {menu == "PS4" ? (
-              <hr className="w-4/5 border border-r-4 bg-[#0ff0fc]" />
-            ) : (
-              ""
-            )}
-          </li>
-          <li
-            className="flex flex-col items-center justify-center cursor-pointer"
-            onClick={() => setMenu("PS5")}
-          >
-            PS5
-            {menu == "PS5" ? (
-              <hr className="w-4/5 border border-r-4 bg-[#0ff0fc]" />
-            ) : (
-              ""
-            )}
-          </li>
+          </span>
+        </Link>
+        <form className="bg-[#FFC1E3] p-3 rounded-md flex flex-row items-center">
+          <input
+            type="text"
+            placeholder="Search..."
+            className="bg-transparent focus:outline-none w-24 sm:w-64"
+          />
+          <FaSearch className="text-[#3B0A45]" />
+        </form>
+        <ul className="flex flex-row gap-4">
+          <Link to="/">
+            <li className="hidden sm:inline text-[#FFC1E3] hover:text-[#B2FFFF] hover:cursor-pointer">
+              Home
+            </li>
+          </Link>
+          <Link to="/about">
+            <li className="hidden sm:inline text-[#FFC1E3] hover:text-[#B2FFFF] hover:cursor-pointer">
+              About
+            </li>
+          </Link>
+          <Link to="/signin">
+            <li className="text-[#FFC1E3] hover:text-[#B2FFFF] hover:cursor-pointer">
+              Sign in
+            </li>
+          </Link>
         </ul>
-        <div className="flex flex-row items-center gap-[45px]">
-          <button className=" w-[157px] h-[58px] border border-[#0ff0fc] text-xl font-light rounded-full active:bg-[#0ff0fc] active:text-white font-poppins">
-            Login
-          </button>
-          <img src={cart_icon} alt="" />
-          <div className="flex w-[22px] h-[22px] items-center justify-center mt-[-35px] ml-[-55px] rounded-full text-sm bg-[red] text-white font-poppins">
-            0
-          </div>
-        </div>
       </div>
-    </>
+    </header>
   );
 };
 
