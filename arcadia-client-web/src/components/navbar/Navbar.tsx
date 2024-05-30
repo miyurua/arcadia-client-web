@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <header className="bg-[#3B0A45]">
+    <header className="bg-[#F5E6CC]">
       <div className="flex flex-row justify-between max-w-6xl mx-auto p-3 items-center">
         <Link to="/">
-          <span className="text-[#FF6EC7] font-bold text-sm sm:text-xl">
+          <span className="text-[#91A8ED] font-bold text-sm sm:text-xl font-spacemono">
             Arcadia
           </span>
         </Link>
-        <form className="bg-[#FFC1E3] p-3 rounded-md flex flex-row items-center">
+        <form className="bg-[#FFF4E1] p-3 rounded-md flex flex-row items-center font-inconsolata">
           <input
             type="text"
             placeholder="Search..."
@@ -18,19 +18,15 @@ const Navbar = () => {
           />
           <FaSearch className="text-[#3B0A45]" />
         </form>
-        <ul className="flex flex-row gap-4">
+        <ul className="flex flex-row gap-4 font-spacemono font-semibold">
           <Link to="/">
-            <li className="hidden sm:inline text-[#FFC1E3] hover:text-[#B2FFFF] hover:cursor-pointer">
-              Home
-            </li>
+            <li className="hidden sm:inline">Home</li>
           </Link>
           <Link to="/about">
-            <li className="hidden sm:inline text-[#FFC1E3] hover:text-[#B2FFFF] hover:cursor-pointer">
-              About
-            </li>
+            <li className="hidden sm:inline">About</li>
           </Link>
           <Link to="/signin">
-            <li className="text-[#FFC1E3] hover:text-[#B2FFFF] hover:cursor-pointer">
+            <li className="text-[#3B0A45] hover:text-[#91A8ED] hover:cursor-pointer">
               Sign in
             </li>
           </Link>
