@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <header className="bg-[#F5E6CC]">
+    <header className="bg-[#F9F5F2] border-b">
       <div className="flex flex-row justify-between max-w-6xl mx-auto p-3 items-center">
         <Link to="/">
           <span className="text-[#91A8ED] font-bold text-sm sm:text-xl font-spacemono">
             Arcadia
           </span>
         </Link>
-        <form className="bg-[#FFF4E1] p-3 rounded-md flex flex-row items-center font-inconsolata">
+        <form className="bg-white p-3 rounded-md flex flex-row items-center font-inconsolata">
           <input
             type="text"
             placeholder="Search..."
