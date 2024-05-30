@@ -85,7 +85,7 @@ const SignIn = () => {
           <span className="text-[#91A8ED]">Sign up</span>
         </Link>
       </div>
-      {error ? <p className="text-red-500 mt-4">{"hii"}</p> : ""}
+      {error ? <p className="text-red-500 mt-4">{error}</p> : ""}
     </div>
   );
 };
