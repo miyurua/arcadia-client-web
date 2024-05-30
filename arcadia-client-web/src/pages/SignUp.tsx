@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import OAuth from "../components/oauth/OAuth";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({});
@@ -65,7 +66,8 @@ const SignUp = () => {
           id="password"
           onChange={handleChange}
         />
-        <div className="flex justify-end">
+        <div className="flex justify-between">
+          <OAuth />
           <button
             disabled={loading}
             className="border rounded-lg px-7 py-4 hover:bg-[#91A8ED] hover:text-white hover:font-semibold disabled:bg-red-300"
@@ -74,7 +76,7 @@ const SignUp = () => {
           </button>
         </div>
       </form>
-      <div className="flex flex-row gap-4">
+      <div className="flex flex-row gap-4 mt-4">
         <p>Have an account?</p>
         <Link to="/signin">
           <span className="text-[#91A8ED]">Sign in</span>

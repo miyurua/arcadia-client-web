@@ -7,6 +7,7 @@ import {
   signInFailure,
 } from "../redux/user/userSlice";
 import { RootState } from "../redux/store";
+import OAuth from "../components/oauth/OAuth";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({});
@@ -68,7 +69,8 @@ const SignIn = () => {
           id="password"
           onChange={handleChange}
         />
-        <div className="flex justify-end">
+        <div className="flex justify-between items-center">
+          <OAuth />
           <button
             disabled={loading}
             className="border rounded-lg px-7 py-4 hover:bg-[#91A8ED] hover:text-white hover:font-semibold disabled:bg-red-300"
@@ -77,7 +79,7 @@ const SignIn = () => {
           </button>
         </div>
       </form>
-      <div className="flex flex-row gap-4">
+      <div className="flex flex-row gap-4 mt-4">
         <p>Dont have an account?</p>
         <Link to="/signup">
           <span className="text-[#91A8ED]">Sign up</span>
