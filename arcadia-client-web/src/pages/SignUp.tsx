@@ -70,7 +70,7 @@ const SignUp = () => {
           <OAuth />
           <button
             disabled={loading}
-            className="border rounded-lg px-7 py-4 hover:bg-[#91A8ED] hover:text-white hover:font-semibold disabled:bg-red-300"
+            className="border rounded-lg px-7 py-4 hover:bg-[#21A193] hover:text-white hover:font-semibold disabled:bg-red-300 hover:shadow-[5px_5px_0px_0px_rgba(0,0,0)]"
           >
             {loading ? "Loading..." : "Sign Up"}
           </button>
