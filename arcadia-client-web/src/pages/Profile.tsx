@@ -14,6 +14,9 @@ import {
   deleteUserFailure,
   deleteUserStart,
   deleteUserSuccess,
+  signoutFailure,
+  signoutStart,
+  signoutSuccess,
   updateUserFailure,
   updateUserStart,
   updateUserSuccess,
@@ -121,6 +124,23 @@ const Profile = () => {
     }
   };
 
+  const handleSignout = async () => {
+    try {
+      dispatch(signoutStart());
+      const res = await fetch("/api/auth/signout");
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(signoutFailure(data.message));
+        return;
+      }
+      dispatch(signoutSuccess(data));
+    } catch (error) {
+      if (error instanceof Error) {
+        dispatch(signoutFailure(error.message));
+      }
+    }
+  };
+
   return (
     <div className="font-spacemono p-3 max-w-lg mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
@@ -195,7 +215,10 @@ const Profile = () => {
         >
           Delete account <AiOutlineDelete />
         </span>
-        <span className="cursor-pointer text-[#EA4335] flex items-center gap-1">
+        <span
+          onClick={handleSignout}
+          className="cursor-pointer text-[#EA4335] flex items-center gap-1"
+        >
           <RiLogoutBoxLine />
           Sign out
         </span>
