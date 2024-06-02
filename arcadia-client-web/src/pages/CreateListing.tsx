@@ -1,6 +1,78 @@
-import React from "react";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
+import { useState } from "react";
+import { BiSolidGame } from "react-icons/bi";
+import { app } from "../firebase";
 
 const CreateListing = () => {
+  const [imageFiles, setImageFiles] = useState([]);
+  const [formData, setFormData] = useState({
+    imageUrls: [],
+  });
+  const [imageUploadError, setImageUploadError] = useState("");
+  const [uploadingImage, setUploadingImage] = useState(false);
+
+  console.log("img urls", formData);
+
+  const handleImageSubmit = () => {
+    if (
+      imageFiles.length > 0 &&
+      imageFiles.length + formData.imageUrls.length < 7
+    ) {
+      setUploadingImage(true);
+      const promises = [];
+
+      for (let i = 0; i < imageFiles.length; i++) {
+        promises.push(storeImage(imageFiles[i]));
+      }
+      Promise.all(promises)
+        .then((urls) => {
+          setFormData({
+            ...formData,
+            imageUrls: formData.imageUrls.concat(urls),
+          });
+          setImageUploadError("");
+          setUploadingImage(false);
+        })
+        .catch((err) => {
+          setImageUploadError("Image upload failed (2 MB max per image)");
+          setUploadingImage(false);
+        });
+    } else {
+      setImageUploadError("You can only upload 6 images per listing");
+      setUploadingImage(false);
+    }
+  };
+
+  const storeImage = async (file) => {
+    return new Promise((resolve, reject) => {
+      const storage = getStorage(app);
+      const fileName = new Date().getTime() + file.name;
+      const storageRef = ref(storage, fileName);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log(`Upload is ${progress}% done`);
+        },
+        (error) => {
+          reject(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            resolve(downloadURL);
+          });
+        }
+      );
+    });
+  };
+
   return (
     <main className="font-spacemono p-3 max-w-4xl mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">
@@ -46,10 +118,21 @@ const CreateListing = () => {
           <div className="flex flex-col gap-6">
             <div className="flex flex-row gap-4">
               <div className="flex items-center border rounded-md p-2 w-full hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] transition-all duration-500">
-                <input type="file" id="images" accept="image/*" multiple />
+                <input
+                  onChange={(e) => setImageFiles(e.target.files)}
+                  type="file"
+                  id="images"
+                  accept="image/*"
+                  multiple
+                />
               </div>
-              <button className="border rounded-md text-[#21A193] p-3 hover:drop-shadow-xl hover:bg-[#21A193] hover:text-white hover:font-semibold disabled:bg-red-300 shadow-[3px_3px_0px_0px_rgba(33,161,147)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0)] transition-all duration-500">
-                Upload
+              <button
+                type="button"
+                disabled={uploadingImage}
+                onClick={handleImageSubmit}
+                className="border rounded-md text-[#21A193] p-3 hover:drop-shadow-xl hover:bg-[#21A193] hover:text-white hover:font-semibold disabled:bg-red-300 shadow-[3px_3px_0px_0px_rgba(33,161,147)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0)] transition-all duration-500"
+              >
+                {uploadingImage ? "Uploading..." : "Upload"}
               </button>
             </div>
             <p className="font-semibold">
@@ -57,6 +140,9 @@ const CreateListing = () => {
               <span className="text-xs font-light">
                 First image will be the cover image (max 6)
               </span>
+              <p className="text-red-500 text-xs">
+                {imageUploadError && imageUploadError}
+              </p>
             </p>
             <div className="flex flex-row gap-2 justify-between">
               <input
@@ -73,7 +159,7 @@ const CreateListing = () => {
                 <span>DLC Included?</span>
               </div>
             </div>
-            <div className="flex flex-row gap-4 flex-wrap">
+            <div className="flex flex-row gap-4 w-full">
               <input
                 id="regPrice"
                 type="number"
@@ -92,7 +178,11 @@ const CreateListing = () => {
               />
             </div>
           </div>
-          <button className="border rounded-md text-[#21A193] p-3 hover:drop-shadow-xl hover:bg-[#21A193] hover:text-white hover:font-semibold disabled:bg-red-300 shadow-[3px_3px_0px_0px_rgba(33,161,147)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0)] transition-all duration-500">
+          <button
+            type="button"
+            className="flex flex-row justify-center items-center gap-2 border rounded-lg px-16 py-4 text-[#4285F4] hover:bg-[#4285F4] hover:text-white hover:font-semibold disabled:bg-slate-300 shadow-[3px_3px_0px_0px_rgba(66,133,244)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0)] transition-all duration-500"
+          >
+            <BiSolidGame />
             Create game listing
           </button>
         </div>
