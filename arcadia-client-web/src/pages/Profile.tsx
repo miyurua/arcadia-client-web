@@ -21,6 +21,8 @@ import {
   updateUserStart,
   updateUserSuccess,
 } from "../redux/user/userSlice";
+import { BiSolidGame } from "react-icons/bi";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const fileRef = useRef<HTMLInputElement | null>(null);
@@ -156,7 +158,7 @@ const Profile = () => {
           src={formData.avatar || currentUser?.avatar}
           onClick={() => fileRef.current.click()}
           alt="profile"
-          className="rounded-md w-20 h-20 object-cover cursor-pointer self-center m-2"
+          className="rounded-md w-20 h-20 object-cover cursor-pointer self-center m-2 border hover:hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] transition-all duration-500"
         />
         <p className="mx-auto text-sm">
           {uploadError ? (
@@ -181,7 +183,7 @@ const Profile = () => {
           type="text"
           defaultValue={currentUser.username}
           placeholder="Username"
-          className="border p-3 rounded-md"
+          className="border p-3 rounded-md hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] transition-all duration-500"
           id="username"
           onChange={handleChange}
         />
@@ -189,24 +191,34 @@ const Profile = () => {
           type="email"
           defaultValue={currentUser.email}
           placeholder="Email"
-          className="border p-3 rounded-md"
+          className="border p-3 rounded-md hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] transition-all duration-500"
           id="email"
           onChange={handleChange}
         />
         <input
           type="password"
           placeholder="Password"
-          className="border p-3 rounded-md"
+          className="border p-3 rounded-md hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] transition-all duration-500"
           id="password"
           onChange={handleChange}
         />
-        <button
-          disabled={loading}
-          className="border rounded-md px-7 py-4 hover:drop-shadow-xl	 hover:bg-[#21A193] hover:text-white hover:font-semibold disabled:bg-red-300
-        hover:shadow-[5px_5px_0px_0px_rgba(0,0,0)]"
-        >
-          {loading ? "Loading..." : "Update"}
-        </button>
+        <div className="flex justify-between items-center">
+          <Link to="/add-new-game">
+            <button
+              type="button"
+              className="flex flex-row items-center gap-2 border rounded-lg px-16 py-4 text-[#4285F4] hover:bg-[#4285F4] hover:text-white hover:font-semibold disabled:bg-slate-300 shadow-[3px_3px_0px_0px_rgba(66,133,244)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0)] transition-all duration-500"
+            >
+              <BiSolidGame />
+              Create a Game Listing
+            </button>
+          </Link>
+          <button
+            disabled={loading}
+            className="border rounded-md px-7 py-4 hover:drop-shadow-xl	 hover:bg-[#21A193] hover:text-white hover:font-semibold disabled:bg-red-300 shadow-[3px_3px_0px_0px_rgba(0,0,0)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0)] transition-all duration-500"
+          >
+            {loading ? "Loading..." : "Update"}
+          </button>
+        </div>
       </form>
       <div className="flex justify-between mt-6">
         <span
