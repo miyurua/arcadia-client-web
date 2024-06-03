@@ -50,11 +50,11 @@ const CreateListing = () => {
       });
       const data = await res.json();
       setLoading(false);
-      navigate("/home");
       if (data.success === false) {
         setError(true);
         setLoading(false);
       }
+      navigate(`/listing/${data._id}`);
     } catch (error) {
       if (error instanceof Error) {
         setError(true);
