@@ -29,6 +29,13 @@ const Navbar = () => {
           <Link to="/about">
             <li className="hidden sm:inline">About</li>
           </Link>
+          {currentUser && (
+            <Link to="/listings">
+              <button className="border rounded-md p-2 text-sm hover:drop-shadow-xl	 bg-[#F7CB45] hover:font-semibold disabled:bg-red-300 shadow-[3px_3px_0px_0px_rgba(0,0,0)] hover:shadow-[5px_5px_0px_0px_rgba(0,0,0)] transition-all duration-500 hover:translate-y-[-3px] hover:translate-x-[-2px]">
+                My listings
+              </button>
+            </Link>
+          )}
           <Link to="/profile">
             {currentUser ? (
               <img className="rounded-md h-10 w-10" src={currentUser.avatar} />

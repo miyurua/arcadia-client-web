@@ -143,7 +143,7 @@ const CreateListing = () => {
   };
 
   return (
-    <main className="font-spacemono p-3 max-w-4xl mx-auto">
+    <main className="font-spacemono p-3 max-w-5xl mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">
         Add a new game
       </h1>
@@ -176,7 +176,7 @@ const CreateListing = () => {
             placeholder="Description"
             onChange={handleChange}
             value={formData.description}
-            className="h-[200px] border p-3 rounded-md hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] transition-all duration-500 resize-none"
+            className=" h-36 border p-3 rounded-md hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] transition-all duration-500 resize-none"
             required
           />
           <input
