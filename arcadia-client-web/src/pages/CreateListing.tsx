@@ -194,7 +194,7 @@ const CreateListing = () => {
         <div className="flex flex-col flex-1 justify-between sm:gap-0 gap-6">
           <div className="flex flex-col gap-6">
             <div className="flex flex-row gap-4">
-              <div className="flex w-full items-center border rounded-md p-2 w-full hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] transition-all duration-500">
+              <div className="flex bg-white items-center border rounded-md p-2 w-full hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] transition-all duration-500">
                 <input
                   onChange={(e) => setImageFiles(e.target.files)}
                   type="file"
@@ -207,7 +207,7 @@ const CreateListing = () => {
                 type="button"
                 disabled={uploadingImage}
                 onClick={handleImageSubmit}
-                className="border rounded-md text-[#21A193] p-3 hover:drop-shadow-xl hover:bg-[#21A193] hover:text-white hover:font-semibold disabled:bg-red-300 shadow-[3px_3px_0px_0px_rgba(33,161,147)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0)] transition-all duration-500"
+                className="border rounded-md text-[#21A193] p-3 hover:drop-shadow-xl hover:bg-[#21A193] hover:text-white hover:font-semibold disabled:bg-red-300 shadow-[3px_3px_0px_0px_rgba(33,161,147)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0)] transition-all duration-500 hover:translate-y-[-5px] hover:translate-x-[-2px]"
               >
                 {uploadingImage ? "Uploading..." : "Upload"}
               </button>
@@ -284,7 +284,7 @@ const CreateListing = () => {
           </div>
           <button
             disabled={loading || uploadingImage}
-            className="flex flex-row justify-center items-center gap-2 border rounded-lg px-16 py-4 text-[#4285F4] hover:bg-[#4285F4] hover:text-white hover:font-semibold disabled:bg-slate-300 shadow-[3px_3px_0px_0px_rgba(66,133,244)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0)] transition-all duration-500"
+            className="flex flex-row justify-center items-center gap-2 border rounded-lg px-16 py-4 text-[#4285F4] hover:bg-[#4285F4] hover:text-white hover:font-semibold disabled:bg-slate-300  shadow-[3px_3px_0px_0px_rgba(0,0,0)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0)] transition-all duration-500 hover:translate-y-[-5px] hover:translate-x-[-2px]"
           >
             {loading ? (
               "Creating a game listing..."

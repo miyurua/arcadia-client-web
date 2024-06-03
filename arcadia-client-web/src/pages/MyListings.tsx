@@ -23,6 +23,22 @@ const MyListings = () => {
     }
   };
 
+  const handleListingDelete = async (id) => {
+    try {
+      const res = await fetch(`/api/listing/delete/${id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        console.log(data.message);
+        return;
+      }
+      setUserListings((prev) => prev.filter((listing) => listing._id !== id));
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   useEffect(() => {
     handleShowListings();
   }, []);
@@ -37,7 +53,7 @@ const MyListings = () => {
             <Link to={`/listing/${listing._id}`}>
               <div
                 key={listing._id}
-                className="flex flex-row border rounded-md p-4 justify-between cursor-pointer hover:shadow-[5px_5px_0px_0px_rgba(0,0,0)] transition-all duration-500 hover:translate-y-[-3px] hover:translate-x-[-2px]"
+                className="flex flex-row border bg-white border-black rounded-md p-4 justify-between cursor-pointer shadow-[3px_3px_0px_0px_rgba(0,0,0)] hover:shadow-[5px_5px_0px_0px_rgba(0,0,0)] transition-all duration-500 hover:translate-y-[-4px] hover:translate-x-[-2px]"
               >
                 <div className="flex gap-4 flex-row">
                   <img
@@ -75,7 +91,13 @@ const MyListings = () => {
                       <button className="hover:underline">Edit</button>
                     </Link>
                     <p>/</p>
-                    <button className="text-red-500 hover:underline">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleListingDelete(listing._id);
+                      }}
+                      className="text-red-500 hover:underline"
+                    >
                       Delete
                     </button>
                   </div>
