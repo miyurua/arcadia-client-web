@@ -4,14 +4,14 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiSolidGame } from "react-icons/bi";
 import { app } from "../firebase";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-const CreateListing = () => {
+const EditListing = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);
   const [imageFiles, setImageFiles] = useState([]);
   const [formData, setFormData] = useState({
@@ -30,8 +30,20 @@ const CreateListing = () => {
   const [loading, setLoading] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
   const navigate = useNavigate();
+  const params = useParams();
 
-  console.log(formData);
+  useEffect(() => {
+    const fetchListing = async () => {
+      const listingId = params.id;
+      const res = await fetch(`/api/listing/get/${listingId}`);
+      const data = await res.json();
+      if (data.success === false) {
+        console.log(data.message);
+      }
+      setFormData(data);
+    };
+    fetchListing();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -41,7 +53,7 @@ const CreateListing = () => {
         return setError(true);
       setLoading(true);
       setError(false);
-      const res = await fetch("/api/listing/create", {
+      const res = await fetch(`/api/listing/update/${params.id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -144,9 +156,7 @@ const CreateListing = () => {
 
   return (
     <main className="font-spacemono p-3 max-w-5xl mx-auto">
-      <h1 className="text-3xl font-semibold text-center my-7">
-        Add a new game
-      </h1>
+      <h1 className="text-3xl font-semibold text-center my-7">Edit listing</h1>
       <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4">
         <div className="flex flex-1 flex-col gap-6">
           <input
@@ -287,11 +297,11 @@ const CreateListing = () => {
             className="flex flex-row justify-center items-center gap-2 border rounded-lg px-16 py-4 text-[#4285F4] hover:bg-[#4285F4] hover:text-white hover:font-semibold disabled:bg-slate-300  shadow-[3px_3px_0px_0px_rgba(0,0,0)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0)] transition-all duration-500 hover:translate-y-[-5px] hover:translate-x-[-2px]"
           >
             {loading ? (
-              "Creating a game listing..."
+              "Updating the game listing..."
             ) : (
               <>
                 <BiSolidGame />
-                Create game listing
+                Update game listing
               </>
             )}
           </button>
@@ -302,4 +312,4 @@ const CreateListing = () => {
   );
 };
 
-export default CreateListing;
+export default EditListing;

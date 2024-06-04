@@ -57,7 +57,7 @@ const MyListings = () => {
               >
                 <div className="flex gap-4 flex-row">
                   <img
-                    src={listing.imageUrls[0]}
+                    src={listing.imageUrls[1]}
                     alt=""
                     className="h-24 w-24 border rounded-md"
                   />
@@ -87,13 +87,13 @@ const MyListings = () => {
                     <p className="line-through">{listing.regularPrice} LKR</p>
                   </div>
                   <div className="flex flex-row gap-2 z-10">
-                    <Link to="/profile">
+                    <Link to={`/edit-listing/${listing._id}`}>
                       <button className="hover:underline">Edit</button>
                     </Link>
                     <p>/</p>
                     <button
                       onClick={(e) => {
-                        e.stopPropagation();
+                        e.preventDefault();
                         handleListingDelete(listing._id);
                       }}
                       className="text-red-500 hover:underline"

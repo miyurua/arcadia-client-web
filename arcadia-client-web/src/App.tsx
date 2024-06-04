@@ -8,6 +8,7 @@ import Navbar from "./components/navbar/Navbar";
 import PrivateRoute from "./components/privateRoute/PrivateRoute";
 import CreateListing from "./pages/CreateListing";
 import MyListings from "./pages/MyListings";
+import EditListing from "./pages/EditListing";
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
         <Route element={<PrivateRoute />}>
           <Route path="/profile" element={<Profile />} />
           <Route path="/add-new-game" element={<CreateListing />} />
+          <Route path="/edit-listing/:id" element={<EditListing />} />
           <Route path="listings" element={<MyListings />} />
         </Route>
       </Routes>
