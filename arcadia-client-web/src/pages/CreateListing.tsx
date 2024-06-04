@@ -127,7 +127,7 @@ const CreateListing = () => {
     if (e.target.id === "dlcIncluded") {
       setFormData({
         ...formData,
-        [e.target.id]: e.target.checked,
+        [e.target.id]: (e.target as HTMLInputElement).checked,
       });
     }
     if (

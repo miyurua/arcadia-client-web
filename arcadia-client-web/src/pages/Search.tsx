@@ -1,39 +1,137 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Search = () => {
+  const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sidebarData, setSidebarData] = useState({
+    searchTerm: "",
+    dlcIncluded: false,
+    sort: "createdAt",
+    order: "desc",
+  });
+  const [loading, setLoading] = useState(false);
+  const [listData, setListData] = useState([]);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    if (e.target.id === "searchTerm") {
+      setSidebarData({ ...sidebarData, searchTerm: e.target.value });
+    }
+
+    if (e.target.id === "dlcIncluded") {
+      setSidebarData({
+        ...sidebarData,
+        [e.target.id]: (e.target as HTMLInputElement).checked,
+      });
+    }
+
+    if (e.target.id === "sort_order") {
+      const sort = e.target.value.split("_")[0] || "createdAt";
+      const order = e.target.value.split("_")[1] || "desc";
+
+      setSidebarData({
+        ...sidebarData,
+        sort,
+        order,
+      });
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const urlParams = new URLSearchParams();
+    urlParams.set("searchTerm", sidebarData.searchTerm);
+    urlParams.set("dlcIncluded", sidebarData.dlcIncluded.toString());
+    urlParams.set("sort", sidebarData.sort);
+    urlParams.set("order", sidebarData.order);
+    const searchQuery = urlParams.toString();
+    navigate(`/search?${searchQuery}`);
+  };
+
+  console.log(listData);
+
+  useEffect(() => {
+    setSidebarData({
+      ...sidebarData,
+      searchTerm: searchTerm,
+    });
+  }, [searchTerm]);
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const searchTermFromUrl = urlParams.get("searchTerm");
+    const dlcFromUrl = urlParams.get("dlcIncluded");
+    const sortFromUrl = urlParams.get("sort");
+    const orderFromUrl = urlParams.get("order");
+
+    if (searchTermFromUrl || dlcFromUrl || sortFromUrl || orderFromUrl) {
+      setSidebarData({
+        searchTerm: searchTermFromUrl || "",
+        dlcIncluded: dlcFromUrl === "true" ? true : false,
+        sort: sortFromUrl || "createdAt",
+        order: orderFromUrl || "desc",
+      });
+      setSearchTerm(searchTermFromUrl || "");
+
+      const fetchData = async () => {
+        setLoading(true);
+        const searchQuery = urlParams.toString();
+        const res = await fetch(`/api/listing/get?${searchQuery}`);
+        const data = res.json();
+        setListData(data);
+      };
+
+      fetchData();
+    }
+  }, [location.search]);
+
   return (
     <div className="font-spacemono flex flex-col md:flex-row md:min-h-screen">
       {/* left */}
       <div className="p-7 border-b-2 md:border-r-2">
-        <form action="" className="flex flex-col gap-4">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div className="flex flex-row items-center gap-2 max-w-3lg font-inconsolata">
             <label className="whitespace-nowrap font-semibold">
-              Search Term :{" "}
+              Search Term :
             </label>
             <input
               type="text"
               placeholder="Search..."
               className="bg-transparent focus:outline-none sm:w-64 bg-white p-3 rounded-md w-full"
-              // value={serachTerm}
-              // onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              //   setSearchTerm(e.target.value)
-              // }
+              value={searchTerm}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setSearchTerm(e.target.value);
+              }}
             />
           </div>
           <div className="flex gap-2 font-inconsolata">
             <label className="whitespace-nowrap font-semibold">Filter : </label>
             <div className="flex flex-row gap-2">
-              <input type="checkbox" id="dlcIncluded" />
+              <input
+                type="checkbox"
+                id="dlcIncluded"
+                onChange={handleChange}
+                checked={sidebarData.dlcIncluded}
+              />
               <span>DLC Included?</span>
             </div>
           </div>
           <div className="flex gap-2 font-inconsolata items-center">
             <label className="whitespace-nowrap font-semibold">Sort : </label>
-            <select name="" id="sort_order" className="p-3 rounded-md">
-              <option value="">Price high - low</option>
-              <option value="">Price low - high</option>
-              <option value="">Latest</option>
-              <option value="">Oldest</option>
+            <select
+              name=""
+              id="sort_order"
+              className="p-3 rounded-md"
+              onChange={handleChange}
+              defaultValue={"created_at_desc"}
+            >
+              <option value="regularPrice_desc">Price high - low</option>
+              <option value="regularPrice_asc">Price low - high</option>
+              <option value="createdAt_desc">Latest</option>
+              <option value="createdAt_asc">Oldest</option>
             </select>
           </div>
           <div className="flex justify-end">
