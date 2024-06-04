@@ -84,7 +84,9 @@ const MyListings = () => {
                     <p className="inline-block px-2 py-1 bg-green-500 text-white rounded-md font-semibold text-md">
                       {listing.discountPrice} LKR
                     </p>
-                    <p className="line-through">{listing.regularPrice} LKR</p>
+                    {listing.regularPrice !== listing.discountPrice && (
+                      <p className="line-through">{listing.regularPrice} LKR</p>
+                    )}
                   </div>
                   <div className="flex flex-row gap-2 z-10">
                     <Link to={`/edit-listing/${listing._id}`}>
