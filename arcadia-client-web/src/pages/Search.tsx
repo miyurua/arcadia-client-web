@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import GameCardOne from "../components/common/GameCardOne";
+
+export interface ISidebarData {
+  searchTerm: string;
+  dlcIncluded: boolean;
+  sort: string;
+  order: string;
+}
 
 const Search = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
-  const [sidebarData, setSidebarData] = useState({
+  const [sidebarData, setSidebarData] = useState<ISidebarData>({
     searchTerm: "",
     dlcIncluded: false,
     sort: "createdAt",
@@ -51,7 +59,8 @@ const Search = () => {
     navigate(`/search?${searchQuery}`);
   };
 
-  console.log(listData);
+  console.log("list d len", listData.length);
+  console.log("list d", listData);
 
   useEffect(() => {
     setSidebarData({
@@ -80,8 +89,9 @@ const Search = () => {
         setLoading(true);
         const searchQuery = urlParams.toString();
         const res = await fetch(`/api/listing/get?${searchQuery}`);
-        const data = res.json();
+        const data = await res.json();
         setListData(data);
+        setLoading(false);
       };
 
       fetchData();
@@ -143,8 +153,22 @@ const Search = () => {
       </div>
 
       {/* right */}
-      <div>
-        <h1 className="text-3xl m-5">Search Results: </h1>
+      <div className="p-7 flex flex-col gap-4 w-full">
+        <h1 className="text-3xl">Search Results: </h1>
+        <div className="flex flex-wrap gap-4">
+          {loading === false && listData.length === 0 && (
+            <p className="text-xl">
+              <span className="text-[#91A8ED]">{searchTerm} </span> returned no
+              results.
+            </p>
+          )}
+          {loading && <p className="text-xl text-center mx-auto">Loading...</p>}
+          {!loading &&
+            listData &&
+            listData.map((item) => (
+              <GameCardOne key={listData._id} gameData={item} />
+            ))}
+        </div>
       </div>
     </div>
   );

@@ -10,5 +10,8 @@ export default {
       spacemono: ["Space Mono", "monospace"],
     },
   },
-  plugins: [],
+  plugins: [
+    require("@tailwindcss/line-clamp"),
+    // ...
+  ],
 };
