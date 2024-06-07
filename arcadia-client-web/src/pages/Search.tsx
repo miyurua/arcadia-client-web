@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import GameCardOne from "../components/common/GameCardOne";
 
 export interface ISidebarData {
@@ -20,6 +20,7 @@ const Search = () => {
   });
   const [loading, setLoading] = useState(false);
   const [listData, setListData] = useState([]);
+  const [isShowMore, setIsShowMore] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -90,6 +91,9 @@ const Search = () => {
         const searchQuery = urlParams.toString();
         const res = await fetch(`/api/listing/get?${searchQuery}`);
         const data = await res.json();
+        if (data.length > 8) {
+          setIsShowMore(true);
+        }
         setListData(data);
         setLoading(false);
       };
@@ -97,6 +101,20 @@ const Search = () => {
       fetchData();
     }
   }, [location.search]);
+
+  const onShowMoreClick = async () => {
+    const numOfGameListings = listData.length;
+    const startIndex = numOfGameListings;
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.set("startIndex", startIndex.toString());
+    const searchQuery = urlParams.toString();
+    const res = await fetch(`api/listing/get?${searchQuery}`);
+    const data = await res.json();
+    if (data.length < 9) {
+      setIsShowMore(false);
+    }
+    setListData([...listData, ...data]);
+  };
 
   return (
     <div className="font-spacemono flex flex-col md:flex-row md:min-h-screen">
@@ -169,6 +187,11 @@ const Search = () => {
               <GameCardOne key={listData._id} gameData={item} />
             ))}
         </div>
+        {isShowMore && (
+          <button className="hover:underline" onClick={onShowMoreClick}>
+            Show more
+          </button>
+        )}
       </div>
     </div>
   );
