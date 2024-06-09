@@ -4,11 +4,14 @@ import SwiperCore from "swiper";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import GameCardOne from "../components/common/GameCardOne";
+import { IGameListingData } from "./Search";
 
-const Home = () => {
+const Home: React.FC = () => {
   SwiperCore.use([Navigation]);
-  const [dlcIncludedListings, setDlcIncludedListings] = useState([]);
-  const [recentListings, setRecentListings] = useState([]);
+  const [dlcIncludedListings, setDlcIncludedListings] = useState<
+    IGameListingData[]
+  >([]);
+  const [recentListings, setRecentListings] = useState<IGameListingData[]>([]);
 
   useEffect(() => {
     const fetchRecentListings = async () => {

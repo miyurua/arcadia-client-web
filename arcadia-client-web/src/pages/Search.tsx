@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import GameCardOne from "../components/common/GameCardOne";
 
 export interface ISidebarData {
@@ -9,7 +9,22 @@ export interface ISidebarData {
   order: string;
 }
 
-const Search = () => {
+export interface IGameListingData {
+  _id: string;
+  title: string;
+  description: string;
+  publisher: string;
+  regularPrice: number;
+  discountPrice: number;
+  ageRating: number;
+  dlcIncluded: boolean;
+  genre: string;
+  imageUrls: string[];
+  userRef: string;
+  __v: number;
+}
+
+const Search: React.FC = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [sidebarData, setSidebarData] = useState<ISidebarData>({
@@ -19,7 +34,7 @@ const Search = () => {
     order: "desc",
   });
   const [loading, setLoading] = useState(false);
-  const [listData, setListData] = useState([]);
+  const [listData, setListData] = useState<IGameListingData[]>([]);
   const [isShowMore, setIsShowMore] = useState(false);
 
   const handleChange = (
@@ -60,7 +75,6 @@ const Search = () => {
     navigate(`/search?${searchQuery}`);
   };
 
-  console.log("list d len", listData.length);
   console.log("list d", listData);
 
   useEffect(() => {
@@ -187,7 +201,7 @@ const Search = () => {
           {!loading &&
             listData &&
             listData.map((item) => (
-              <GameCardOne key={listData._id} gameData={item} />
+              <GameCardOne key={item._id} gameData={item} />
             ))}
         </div>
         {isShowMore && (

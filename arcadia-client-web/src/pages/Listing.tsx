@@ -9,8 +9,9 @@ import { IoMdDownload } from "react-icons/io";
 import { PiStrategyBold } from "react-icons/pi";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+import { IGameListingData } from "./Search";
 
-const Listing = () => {
+const Listing: React.FC = () => {
   SwiperCore.use([Navigation]);
 
   const { currentUser } = useSelector((state: RootState) => state.user);
@@ -18,8 +19,8 @@ const Listing = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [listing, setListing] = useState(null);
-  const [userListings, setUserListings] = useState([]);
+  const [listing, setListing] = useState<IGameListingData>();
+  const [, setUserListings] = useState<IGameListingData[]>([]);
 
   useEffect(() => {
     const fetchListing = async () => {
@@ -43,7 +44,7 @@ const Listing = () => {
     fetchListing();
   }, []);
 
-  const handleListingDelete = async (id) => {
+  const handleListingDelete = async (id: IGameListingData["_id"]) => {
     try {
       const res = await fetch(`/api/listing/delete/${id}`, {
         method: "DELETE",
@@ -56,7 +57,9 @@ const Listing = () => {
       setUserListings((prev) => prev.filter((listing) => listing._id !== id));
       navigate("/listings");
     } catch (error) {
-      console.log(error.message);
+      if (error instanceof Error) {
+        console.log(error.message);
+      }
     }
   };
 

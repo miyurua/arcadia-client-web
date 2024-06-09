@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { Link } from "react-router-dom";
+import { IGameListingData } from "./Search";
 
-const MyListings = () => {
+const MyListings: React.FC = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);
   const [showListingsError, setShowListingsError] = useState(false);
-  const [userListings, setUserListings] = useState([]);
+  const [userListings, setUserListings] = useState<IGameListingData[]>([]);
 
   const handleShowListings = async () => {
     try {
@@ -23,7 +24,7 @@ const MyListings = () => {
     }
   };
 
-  const handleListingDelete = async (id) => {
+  const handleListingDelete = async (id: string) => {
     try {
       const res = await fetch(`/api/listing/delete/${id}`, {
         method: "DELETE",
@@ -35,7 +36,9 @@ const MyListings = () => {
       }
       setUserListings((prev) => prev.filter((listing) => listing._id !== id));
     } catch (error) {
-      console.log(error.message);
+      if (error instanceof Error) {
+        console.log(error.message);
+      }
     }
   };
 

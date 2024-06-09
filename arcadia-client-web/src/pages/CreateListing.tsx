@@ -11,10 +11,22 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { useNavigate } from "react-router-dom";
 
+export interface IListingFormData {
+  imageUrls: string[];
+  title: string;
+  description: string;
+  publisher: string;
+  regularPrice: number;
+  discountPrice: number;
+  ageRating: number;
+  dlcIncluded: boolean;
+  genre: string;
+}
+
 const CreateListing = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);
   const [imageFiles, setImageFiles] = useState([]);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<IListingFormData>({
     imageUrls: [],
     title: "",
     description: "",
@@ -31,7 +43,7 @@ const CreateListing = () => {
   const [uploadingImage, setUploadingImage] = useState(false);
   const navigate = useNavigate();
 
-  console.log(formData);
+  console.log("imageFiles", imageFiles);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

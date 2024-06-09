@@ -9,7 +9,7 @@ import {
 import { RootState } from "../redux/store";
 import OAuth from "../components/oauth/OAuth";
 
-const SignIn = () => {
+const SignIn: React.FC = () => {
   const [formData, setFormData] = useState({});
   const { loading, error } = useSelector((state: RootState) => state.user);
 

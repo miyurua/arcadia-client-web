@@ -24,8 +24,15 @@ import {
 import { BiSolidGame } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
-const Profile = () => {
-  const fileRef = useRef<HTMLInputElement | null>(null);
+export interface IProfileData {
+  username: string;
+  email: string;
+  password: string;
+  avatar: string;
+}
+
+const Profile: React.FC = () => {
+  const fileRef = useRef<HTMLInputElement>();
   const { currentUser, loading, error } = useSelector(
     (state: RootState) => state.user
   );
@@ -44,7 +51,7 @@ const Profile = () => {
     }
   }, [file]);
 
-  const handleFileUpload = (file) => {
+  const handleFileUpload = (file: File) => {
     const storage = getStorage(app);
     const fileName = new Date().getTime() + file.name;
     const storageRef = ref(storage, fileName);
@@ -70,6 +77,8 @@ const Profile = () => {
     );
   };
 
+  console.log("formData", formData);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -78,13 +87,16 @@ const Profile = () => {
     e.preventDefault();
     try {
       dispatch(updateUserStart());
-      const res = await fetch(`/api/user/update/${currentUser._id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const res = await fetch(
+        `/api/user/update/${currentUser && currentUser._id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
       const data = await res.json();
       if (data.success === false) {
         dispatch(updateUserFailure(data.message));
@@ -106,9 +118,12 @@ const Profile = () => {
   const handleDeleteAccount = async () => {
     try {
       dispatch(deleteUserStart());
-      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `/api/user/delete/${currentUser && currentUser._id}`,
+        {
+          method: "DELETE",
+        }
+      );
       const data = await res.json();
       if (data.success === false) {
         dispatch(deleteUserFailure(data.message));

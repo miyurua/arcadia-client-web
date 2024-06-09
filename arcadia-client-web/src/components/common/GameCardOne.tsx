@@ -2,8 +2,13 @@ import React from "react";
 import { FaConnectdevelop } from "react-icons/fa6";
 import { PiMoneyLight } from "react-icons/pi";
 import { Link } from "react-router-dom";
+import { IGameListingData } from "../../pages/Search";
 
-const GameCardOne = ({ gameData }) => {
+export interface GameCardProps {
+  gameData: IGameListingData;
+}
+
+const GameCardOne: React.FC<GameCardProps> = ({ gameData }) => {
   return (
     <Link to={`/listing/${gameData._id}`}>
       <div

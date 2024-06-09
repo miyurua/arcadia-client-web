@@ -1,5 +1,3 @@
-import React from "react";
-
 const About = () => {
   return (
     <div className="font-spacemono max-w-4xl mx-auto flex flex-col gap-6 p-3 ">
