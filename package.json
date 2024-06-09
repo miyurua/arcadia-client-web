@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon arcadia-core-api/index.js",
-    "start": "node arcadia-core-api/index.js"
+    "start": "node arcadia-core-api/index.js",
+    "build": "npm install && npm install --prefix arcadia-client-web && npm run build --prefix arcadia-client-web"
   },
   "keywords": [],
   "author": "",
