@@ -79,7 +79,7 @@ const Home = () => {
       </Swiper>
 
       {recentListings && recentListings.length > 1 && (
-        <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8">
+        <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 mt-10">
           <div className="flex flex-col gap-2 p-3">
             <p className="text-2xl font-semibold">Recently added titles</p>
             <Link
@@ -99,7 +99,7 @@ const Home = () => {
       )}
 
       {dlcIncludedListings && dlcIncludedListings.length > 1 && (
-        <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 mt-10">
+        <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 ">
           <div className="flex flex-col gap-2 p-3">
             <p className="text-2xl font-semibold">DLC included titles</p>
             <Link

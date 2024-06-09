@@ -156,7 +156,7 @@ const EditListing = () => {
 
   return (
     <main className="font-spacemono p-3 max-w-5xl mx-auto">
-      <h1 className="text-3xl font-semibold text-center my-7">Edit listing</h1>
+      <h1 className="text-3xl font-semibold text-start my-7">Edit listing</h1>
       <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4">
         <div className="flex flex-1 flex-col gap-6">
           <input

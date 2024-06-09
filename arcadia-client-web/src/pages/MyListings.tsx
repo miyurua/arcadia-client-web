@@ -44,8 +44,8 @@ const MyListings = () => {
   }, []);
 
   return (
-    <main className="font-spacemono p-3 max-w-2xl mx-auto">
-      <h1 className="text-3xl font-semibold text-center my-7">My listings</h1>
+    <main className="font-spacemono p-3 max-w-4xl mx-auto">
+      <h1 className="text-3xl font-semibold text-start my-7">My listings</h1>
       {showListingsError && <p>An Error Occured</p>}
       {userListings && userListings.length > 0 ? (
         <div className="flex flex-col gap-4">
