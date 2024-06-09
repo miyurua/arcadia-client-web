@@ -6,11 +6,13 @@ import { Link } from "react-router-dom";
 const GameCardOne = ({ gameData }) => {
   return (
     <Link to={`/listing/${gameData._id}`}>
-      <div className="flex flex-col max-w-xs gap-2 border rounded-lg hover:scale-105 transition-all duration-500">
+      <div
+        className={`flex flex-col max-w-[300px] gap-2 border rounded-lg hover:scale-105 transition-all duration-500"`}
+      >
         <img
           src={gameData.imageUrls[0]}
           alt=""
-          className="border rounded-t-lg"
+          className="border rounded-t-lg h-full w-full"
         />
         <div className="flex flex-col p-3 gap-2">
           <p className="text-start truncate">{gameData.title}</p>
