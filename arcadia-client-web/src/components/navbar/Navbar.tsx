@@ -55,6 +55,9 @@ const Navbar = () => {
           <Link to="/">
             <li className="hidden sm:inline">Home</li>
           </Link>
+          <Link to="/blogs">
+            <li className="hidden sm:inline">Blog</li>
+          </Link>
           <Link to="/about">
             <li className="hidden sm:inline">About</li>
           </Link>

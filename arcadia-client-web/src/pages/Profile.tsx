@@ -161,7 +161,10 @@ const Profile: React.FC = () => {
   return (
     <div className="font-spacemono p-3 max-w-4xl mx-auto">
       <h1 className="text-3xl font-semibold text-start my-7">Profile</h1>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-4 max-w-lg mx-auto"
+      >
         <input
           onChange={(e) => setFile(e.target.files[0])}
           type="file"
@@ -235,7 +238,7 @@ const Profile: React.FC = () => {
           </button>
         </div>
       </form>
-      <div className="flex justify-between mt-6">
+      <div className="flex justify-between mt-6 max-w-lg mx-auto">
         <span
           onClick={handleDeleteAccount}
           className="cursor-pointer text-[#EA4335] flex items-center gap-1"

@@ -12,7 +12,7 @@ const GameCardOne: React.FC<GameCardProps> = ({ gameData }) => {
   return (
     <Link to={`/listing/${gameData._id}`}>
       <div
-        className={`flex flex-col max-w-[300px] gap-2 border rounded-lg hover:scale-105 transition-all duration-500"`}
+        className={`flex flex-col max-w-[300px] gap-2 border rounded-lg hover:scale-105 transition-all duration-500 bg-white`}
       >
         <img
           src={gameData.imageUrls[0]}

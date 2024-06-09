@@ -11,6 +11,8 @@ import MyListings from "./pages/MyListings";
 import EditListing from "./pages/EditListing";
 import Listing from "./pages/Listing";
 import Search from "./pages/Search";
+import Blog from "./pages/Blog";
+import BlogList from "./pages/BlogList";
 
 export default function App() {
   return (
@@ -23,6 +25,8 @@ export default function App() {
         <Route path="/about" element={<About />} />
         <Route path="/search" element={<Search />} />
         <Route path="/listing/:id" element={<Listing />} />
+        <Route path="/blogs" element={<BlogList />} />
+        <Route path="/blogs/:id" element={<Blog />} />
         <Route element={<PrivateRoute />}>
           <Route path="/profile" element={<Profile />} />
           <Route path="/add-new-game" element={<CreateListing />} />
